@@ -1,150 +1,42 @@
 #pragma once
 
 
-#include <iostream>
-#include <memory>
+#include "peifang_factory.h"
+
 
 class Drink
 {
 public:
-    virtual float cost() {
-        return 5.0;
-    }
+    float cost() {
 
-    virtual std::string peifang() {
-        return "tea + water + sugar";
-    }
-
-};
-
-
-class PeiLiao : public Drink
-{
-public:
-    PeiLiao(std::shared_ptr<Drink> drink) : drink_(drink) {
-
-    }
-
-    virtual float cost() {
-        return drink_->cost();
-    }
-
-    virtual std::string peifang() {
-        return drink_->peifang();
-    }
-
-private:
-    std::shared_ptr<Drink> drink_;
-};
-
-
-class MikeMix : public PeiLiao
-{
-public:
-    MikeMix(std::shared_ptr<Drink> drink) : PeiLiao(drink) {
-
-    }
-
-    virtual float price() {
-        return 3.0;
-    }
-
-    virtual std::string element() {
-        return "mike";
-    }
-
-    virtual float cost() {
-        float money = price() + PeiLiao::cost();
+        std::vector<std::shared_ptr<PeiFang> > peifangs;
+        peifangs.push_back(std::make_shared<PeiFang>());
+        for (size_t i = 0; i < peiliao_name_vec_.size(); i++) {
+            PeiFangFactory* factory = PeiFangFactory::instance();
+            std::shared_ptr<PeiFang> peifang = factory->add_peiliao(peiliao_name_vec_[i], peifangs[i]);
+            peifangs.push_back(peifang);
+        }
+        float money = peifangs[peifangs.size() - 1]->cost();
         return money;
     }
 
-    virtual std::string peifang() {
-        std::string str = element() + " + " + PeiLiao::peifang();
-        return str;
+    void add_peiliao(const std::string& peiliao_name) {
+        peiliao_name_vec_.push_back(peiliao_name);
     }
 
+protected:
+    std::vector<std::string> peiliao_name_vec_; 
+     
 };
 
 
-class ZhenZhuMix : public PeiLiao
-{
-public:
-    ZhenZhuMix(std::shared_ptr<Drink> drink) : PeiLiao(drink) {
-
-    }
-
-    virtual float price() {
-        return 2.0;
-    }
-
-    virtual std::string element() {
-        return "zhenzhu";
-    }
-
-    virtual float cost() {
-        float money = price() + PeiLiao::cost();
-        return money;
-    }
-
-    virtual std::string peifang() {
-        std::string str = element() + " + " + PeiLiao::peifang();
-        return str;
-    }
-
-};
 
 
-class CaoMeiMix : public PeiLiao
-{
-public:
-    CaoMeiMix(std::shared_ptr<Drink> drink) : PeiLiao(drink) {
 
-    }
 
-    virtual float price() {
-        return 2.5;
-    }
 
-    virtual std::string element() {
-        return "caomei";
-    }
 
-    virtual float cost() {
-        float money = price() + PeiLiao::cost();
-        return money;
-    }
 
-    virtual std::string peifang() {
-        std::string str = element() + " + " + PeiLiao::peifang();
-        return str;
-    }
 
-};
 
-class BingKuaiMix : public PeiLiao
-{
-public:
-    BingKuaiMix(std::shared_ptr<Drink> drink) : PeiLiao(drink) {
-
-    }
-
-    virtual float price() {
-        return 1.0;
-    }
-
-    virtual std::string element() {
-        return "bingkuai";
-    }
-
-    virtual float cost() {
-        float money = price() + PeiLiao::cost();
-        return money;
-    }
-
-    virtual std::string peifang() {
-        std::string str = element() + " + " + PeiLiao::peifang();
-        return str;
-    }
-
-};
 

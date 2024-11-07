@@ -1,24 +1,48 @@
 #include "drink.h"
+#include "peiliao.h"
 
 
 
-int main()
+void test();
+
+int main(int argc, char* argv[])
 {
+    google::InstallFailureSignalHandler();
+    google::InitGoogleLogging(argv[0]);
 
-    std::shared_ptr<Drink> drink0 = std::make_shared<Drink>();
-    std::shared_ptr<MikeMix> drik_mike = std::make_shared<MikeMix>(drink0);
-    std::shared_ptr<ZhenZhuMix> naicha = std::make_shared<ZhenZhuMix>(drik_mike);
+    FLAGS_stderrthreshold = 0;
+    FLAGS_minloglevel = 0;
 
-    std::shared_ptr<Drink> drink1 = std::make_shared<Drink>();
-    std::shared_ptr<CaoMeiMix> drik_cm = std::make_shared<CaoMeiMix>(drink1);
-    std::shared_ptr<BingKuaiMix> shuiguocha = std::make_shared<BingKuaiMix>(drik_cm);
+    PeiFangFactory* factory = PeiFangFactory::instance();
+    factory->peiliao_info();
 
-    std::cout << "naicha peifang: " << naicha->peifang() << ", cost: " << naicha->cost() << std::endl;
-    std::cout << "shuiguocha peifang: " << shuiguocha->peifang() << ", cost: " << shuiguocha->cost() << std::endl;
+    test();
+
+    // Drink naicha;
+
+    // naicha.add_peiliao("MikeMix");
+    // naicha.add_peiliao("MikeMix");
+    // naicha.add_peiliao("MikeMix");
+
+    // std::cout << "naicha: cost=" << naicha.cost() << std::endl;
+
+
 
     return 0;
 }
 
+
+void test()
+{
+    std::shared_ptr<PeiFang> p0 = std::make_shared<PeiFang>();
+
+    std::shared_ptr<PeiFang> p1 = std::make_shared<MikeMix>(p0);
+    std::shared_ptr<PeiFang> p2 = std::make_shared<MikeMix>(p1);
+    std::shared_ptr<PeiFang> p3 = std::make_shared<MikeMix>(p2);
+
+    std::cout << "p3: cost=" << p3->cost() << std::endl;
+
+}
 
 
 
