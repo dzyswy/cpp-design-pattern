@@ -14,11 +14,11 @@ class PeiFang
 {
 public:
     virtual float cost() {
-        return 0.0;
+        return 2.0;
     }
 
     virtual std::string info() {
-        return "";
+        return "water + sugar";
     }
 };
 
@@ -67,9 +67,9 @@ public:
 
 
 #define REGISTER_PEILIAO(name)                                                          \
-    std::shared_ptr<PeiFang> add_##name_func(std::shared_ptr<PeiFang> peifang) {        \
+    std::shared_ptr<PeiFang> fff_add_##name(std::shared_ptr<PeiFang> peifang) {        \
         return std::make_shared<name>(peifang);                                         \
     }                                                                                   \
-    PeiFangFactoryHelper helper_##name(#name, add_##name_func)
+    PeiFangFactoryHelper helper_##name(#name, fff_add_##name)
 
 

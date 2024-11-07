@@ -6,8 +6,15 @@
 class PeiLiao : public PeiFang
 {
 public:
-    PeiLiao(std::shared_ptr<PeiFang> peifang) : peifang_(peifang) {
+    virtual float price() = 0;
+    virtual std::string raw() = 0;
+ 
+};
 
+class MikeMix : public PeiLiao
+{
+public:
+    MikeMix(std::shared_ptr<PeiFang> peifang) : peifang_(peifang) { 
     }
 
     virtual float cost() {
@@ -18,23 +25,22 @@ public:
         return peifang_->info() + " + " + raw();
     }
 
-    virtual float price() {
+    float price() { 
         return 2.0;
     }
 
-    virtual std::string raw() {
-        return "water + sugar";
+    std::string raw() { 
+        return "mike";
     }
 
-public:
+protected:
     std::shared_ptr<PeiFang> peifang_;
 };
 
-class MikeMix : public PeiLiao
+class ZhenZhuMix : public PeiLiao
 {
 public:
-    MikeMix(std::shared_ptr<PeiFang> peifang) : PeiLiao(peifang), peifang_(peifang) {
-        std::cout << "create MikeMix" <<std::endl;
+    ZhenZhuMix(std::shared_ptr<PeiFang> peifang) : peifang_(peifang) { 
     }
 
     virtual float cost() {
@@ -42,25 +48,70 @@ public:
     }
 
     virtual std::string info() {
-        return PeiLiao::info() + " + " + raw();
+        return peifang_->info() + " + " + raw();
     }
 
-    float price() {
-        std::cout << "get MikeMix price" << std::endl;
-        return 2.0;
+    float price() { 
+        return 1.2;
     }
 
-    std::string raw() {
-        std::cout << "get MikeMix raw" << std::endl;
-        return "mike";
+    std::string raw() { 
+        return "zhenzhu";
     }
 
-public:
+protected:
     std::shared_ptr<PeiFang> peifang_;
-
 };
 
 
+class CaoMeiMix : public PeiLiao
+{
+public:
+    CaoMeiMix(std::shared_ptr<PeiFang> peifang) : peifang_(peifang) { 
+    }
 
+    virtual float cost() {
+        return peifang_->cost() + price();
+    }
 
+    virtual std::string info() {
+        return peifang_->info() + " + " + raw();
+    }
 
+    float price() { 
+        return 3.0;
+    }
+
+    std::string raw() { 
+        return "caomei";
+    }
+
+protected:
+    std::shared_ptr<PeiFang> peifang_;
+};
+
+class BingKuaiMix : public PeiLiao
+{
+public:
+    BingKuaiMix(std::shared_ptr<PeiFang> peifang) : peifang_(peifang) { 
+    }
+
+    virtual float cost() {
+        return peifang_->cost() + price();
+    }
+
+    virtual std::string info() {
+        return peifang_->info() + " + " + raw();
+    }
+
+    float price() { 
+        return 1.0;
+    }
+
+    std::string raw() { 
+        return "bingkuai";
+    }
+
+protected:
+    std::shared_ptr<PeiFang> peifang_;
+};

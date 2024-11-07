@@ -16,17 +16,26 @@ int main(int argc, char* argv[])
     PeiFangFactory* factory = PeiFangFactory::instance();
     factory->peiliao_info();
 
-    test();
+    //test();
 
-    // Drink naicha;
+    Drink naicha;
 
-    // naicha.add_peiliao("MikeMix");
-    // naicha.add_peiliao("MikeMix");
-    // naicha.add_peiliao("MikeMix");
+    naicha.add_peiliao("MikeMix"); 
+    naicha.add_peiliao("MikeMix"); 
+    naicha.add_peiliao("ZhenZhuMix");
 
-    // std::cout << "naicha: cost=" << naicha.cost() << std::endl;
+    naicha.shouyao(); 
 
+    std::cout << "naicha: cost = " << naicha.cost() << ", info = " << naicha.info() << std::endl;
 
+    Drink shuiguocha;
+
+    shuiguocha.add_peiliao("CaoMeiMix"); 
+    shuiguocha.add_peiliao("BingKuaiMix");
+
+    shuiguocha.shouyao(); 
+
+    std::cout << "shuiguocha: cost = " << shuiguocha.cost() << ", info = " << shuiguocha.info() << std::endl;
 
     return 0;
 }
@@ -35,6 +44,7 @@ int main(int argc, char* argv[])
 void test()
 {
     std::shared_ptr<PeiFang> p0 = std::make_shared<PeiFang>();
+    std::cout << "p0: cost=" << p0->cost() << std::endl;
 
     std::shared_ptr<PeiFang> p1 = std::make_shared<MikeMix>(p0);
     std::shared_ptr<PeiFang> p2 = std::make_shared<MikeMix>(p1);
